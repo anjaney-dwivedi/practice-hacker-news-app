@@ -1,0 +1,36 @@
+<div class="example-container" [hidden]="isLoading">
+  <mat-form-field>
+    <input matInput placeholder="Search" #searchInput />
+  </mat-form-field>
+  <div class="table-container">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>URL</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a [href]="element.url" target="_blank" class="story-link">
+          {{ element.url }}
+        </a>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <tr class="mat-row no-records-row" *matNoDataRow>
+      <td class="mat-cell no-records-cell" colspan="2">No records found.</td>
+    </tr>
+  </mat-table>
+  </div>
+  <mat-paginator
+    [pageSizeOptions]="[5,10,15,20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+
+<div class="example-container">
+  <app-loader *ngIf="isLoading"></app-loader>
+</div>
